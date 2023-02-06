@@ -60,11 +60,10 @@ public class WsppCountLastL {
             }
 
             try {
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter (
+                try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
                         new FileOutputStream(args[1]),
                         StandardCharsets.UTF_8
-                ));
-                try {
+                ))) {
                     for (Map.Entry<Integer, ArrayList<String>> entry : lastCount.entrySet()) {
                         Integer number = entry.getKey();
                         List<String> words = entry.getValue();
@@ -77,8 +76,6 @@ public class WsppCountLastL {
                             writer.newLine();
                         }
                     }
-                } finally {
-                    writer.close();
                 }
             } catch (IOException e) {
                 System.out.println("Output file: " + e.getMessage());

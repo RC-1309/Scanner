@@ -15,13 +15,13 @@ import java.util.InputMismatchException;
 public class MyScanner {
     private static final int BLOCK_SIZE = 1024;
     private int lastIndexInBuffer = 0;
-    private StringBuilder word = new StringBuilder();
+    private final StringBuilder word = new StringBuilder();
     private int read = -1;
     private int numberOfLines = 0;
-    private char[] buffer = new char[BLOCK_SIZE];
+    private final char[] buffer = new char[BLOCK_SIZE];
     private final Reader reader;
     private static final String LINE_FEED = System.lineSeparator();
-    private CheckToken tokenChecker;
+    private final CheckToken tokenChecker;
 
     private static class DefaultTokenChecker implements CheckToken {
         public boolean isToken(char ch) {
@@ -86,10 +86,6 @@ public class MyScanner {
     private void nextBuffer() throws IOException {
         read = reader.read(buffer);
         lastIndexInBuffer = 0;        
-    }
-
-    private boolean isToken(char symbol) {
-        return Character.isLetter(symbol) || Character.getType(symbol) == Character.DASH_PUNCTUATION || symbol == '\'';
     }
 
     boolean hasNextToken() throws IOException {

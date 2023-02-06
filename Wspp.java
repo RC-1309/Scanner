@@ -29,11 +29,10 @@ public class Wspp {
             }
             in.closeFile();
             try {
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter (
+                try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
                         new FileOutputStream(args[1]),
                         StandardCharsets.UTF_8
-                ));
-                try {
+                ))) {
                     for (Map.Entry<String, IntList> entry : numberOfWords.entrySet()) {
                         IntList value = entry.getValue();
                         writer.write(entry.getKey() + " " + value.size());
@@ -42,8 +41,6 @@ public class Wspp {
                         }
                         writer.newLine();
                     }
-                } finally {
-                    writer.close();
                 }
             } catch (IOException e) {
                 System.out.println("Output file: " + e.getMessage());
